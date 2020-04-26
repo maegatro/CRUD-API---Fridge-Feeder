@@ -3,19 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <
+  <title>Fridge-Feeder</title>
 </head>
 <body>
   <div id="target">ssssssssssss</div>
 </body>
 <script>
-  fetch('http://localhost:4000/api/fridge/1', {
+  fetch('http://localhost:4000/api/fridge', {
     method: 'GET'
   }).then(res => res.json()).then(json => {
     console.log(json)
     let div = document.createElement('div')
-    div.innerText = json.name;
+    div.innerText = json.map(item => item.name);
     document.body.appendChild(div)
   })
 

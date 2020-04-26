@@ -12,7 +12,8 @@ function isValidId(req, res, next) {
 function validItem(insidefridge) {
   const hasName = typeof insidefridge.name == 'string' && insidefridge.name.trim() != '';
   const hasDate = typeof insidefridge.expire_date == 'string' && insidefridge.expire_date.trim() != '';
-  return hasName && hasDate;
+  const hasNumber = !isNaN(insidefridge.number);
+  return hasName && hasDate && hasNumber;
 }
 
 router.get('/', (req, res) => {
@@ -41,6 +42,22 @@ router.post('/', (req, res, next) => {
   }
 });
 
+router.put('/:id', isValidId, (req, res, next) => {
+  if(validItem(req.body)) {
+    queries.update(req.params.id, req.body).then(items => {
+      res.json(items[0]);
+    })
+  } else {
+    next(new Error('Invalid item'));
+  }
+});
 
+router.delete('/:id',isValidId, (req, res) => {
+  queries.delete(req.params.id).then(() => {
+    res.json({
+      deleted: true
+    });
+  });
+});
 
 module.exports = router;
