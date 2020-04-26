@@ -16,7 +16,7 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Number</th>
-        <th scope="col">Expire Date</th>
+        <th scope="col">Expiration Date</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -30,7 +30,7 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Number</th>
-        <th scope="col">Expire Date</th>
+        <th scope="col">Expiration Date</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -41,7 +41,7 @@
         <td><input id="dateInput" type="date" id="start" name="trip-start"
           value="2020-04-27"
           min="2020-04-27" max="2040-12-31"></td>
-        <td><button id="addButton">Add</button></td>
+        <td><button id="addButton">Feed</button></td>
       </tr>
     </tbody>
   </table>
@@ -53,7 +53,7 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Number</th>
-        <th scope="col">Expire Date</th>
+        <th scope="col">Expiration Date</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -104,7 +104,7 @@
     td1_3.appendChild(document.createTextNode(json.expire_date));
     let td1_4 = document.createElement('TD');
     let bt = document.createElement('BUTTON');
-    bt.innerText = 'Ate It';
+    bt.innerText = 'Finished';
     bt.className = 'ateIt';
     bt.value = num;
     td1_4.appendChild(bt);
