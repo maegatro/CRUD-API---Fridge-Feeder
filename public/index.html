@@ -15,38 +15,31 @@
         <th scope="col">Name</th>
         <th scope="col">Number</th>
         <th scope="col">Expire Date</th>
-        <!-- <th scope="col">Period</th> -->
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody id="tbody">
+    </tbody>
+  </table>
+
+  <table class = "addItemForm">
+    <caption>I Bought</caption>
+    <thead>
       <tr>
-        <td id="item1" data-label="Account">Visa - 3412</td>
-        <td data-label="Due Date">04/01/2016</td>
-        <td data-label="Amount">$1,190</td>
-        <!-- <td data-label="Period">03/01/2016 - 03/31/2016</td> -->
+        <th scope="col">Name</th>
+        <th scope="col">Number</th>
+        <th scope="col">Expire Date</th>
+        <th scope="col"></th>
       </tr>
+    </thead>
+    <tbody>
       <tr>
-        <td scope="row" data-label="Account">Visa - 6076</td>
-        <td data-label="Due Date">03/01/2016</td>
-        <td data-label="Amount">$2,443</td>
-        <!-- <td data-label="Period">02/01/2016 - 02/29/2016</td> -->
-      </tr>
-      <tr>
-        <td scope="row" data-label="Account">Corporate AMEX</td>
-        <td data-label="Due Date">03/01/2016</td>
-        <td data-label="Amount">$1,181</td>
-        <!-- <td data-label="Period">02/01/2016 - 02/29/2016</td> -->
-      </tr>
-      <tr>
-        <td scope="row" data-label="Acount">Visa - 3412</td>
-        <td data-label="Due Date">02/01/2016</td>
-        <td data-label="Amount">$842</td>
-        <!-- <td data-label="Period">01/01/2016 - 01/31/2016</td> -->
-      </tr>
-      <tr>
-        <td>ja</td>
-        <td>d</td>
-        <td>d</td>
+        <td><input type="text"></td>
+        <td><input type="number"></td>
+        <td><input id="dateInput" type="date" id="start" name="trip-start"
+          value="2020-04-27"
+          min="2020-04-27" max="2040-12-31"></td>
+        <td><button>Add</button></td>
       </tr>
     </tbody>
   </table>
@@ -55,17 +48,18 @@
 <script>
   let item1 = document.getElementById('item1');
   let tbody = document.getElementById('tbody');
+  let dateInput = document.getElementById('dateInput')
+//   async function itemLength() { await fetch('http://localhost:4000/api/fridge', {
+//     method: 'GET'
+//   }).then(res => res.json()).then(json => {
+//     return json.length
+//   })
+// }
+console.log(dateInput.value)
+// console.log(itemLength())
 
-  console.log(item1.innerText)
-
-  fetch('http://localhost:4000/api/fridge/1', {
-    method: 'GET'
-  }).then(res => res.json()).then(json => {
-    item1.innerText = json.name;
-    // document.body.appendChild(div)
-  })
-
-  let addNewItem = fetch('http://localhost:4000/api/fridge/1', {
+  let addNewItem = (num) => {
+    fetch(`http://localhost:4000/api/fridge/${num}`, {
     method: 'GET'
   }).then(res => res.json()).then(json => {
     console.log(json)
@@ -76,13 +70,27 @@
     td1_2.appendChild(document.createTextNode(json.number));
     let td1_3 = document.createElement('TD');
     td1_3.appendChild(document.createTextNode(json.expire_date));
+    let td1_4 = document.createElement('TD');
+    let bt = document.createElement('BUTTON');
+    bt.innerText = 'Ate It';
+    td1_4.appendChild(bt);
+    // td1_4.appendChild(document.createTextNode(json.expire_date));
     tr1.appendChild(td1_1);
     tr1.appendChild(td1_2);
     tr1.appendChild(td1_3);
+    tr1.appendChild(td1_4);
 
     tbody.appendChild(tr1);
-  });
+  })
+  };
 
+  for(let i = 1; i <= 4; i++){
+    addNewItem(i)
+  }
+  // while(itemLength >= 0){
+  //   addNewItem(itemLength)
+  //   itemLength--;
+  // }
   // fetch('http://localhost:4000/api/fridge', {
   //   method: 'GET'
   // }).then(res => res.json()).then(json => {
