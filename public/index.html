@@ -8,6 +8,8 @@
 </head>
 <body>
 
+  <p><a href="https://github.com/maegatro/Fridge-Feeder" target="_blank">Fridge-Feeder</a></p>
+
   <table>
     <caption>What's Inside My Fridge</caption>
     <thead>
@@ -34,12 +36,35 @@
     </thead>
     <tbody>
       <tr>
-        <td><input type="text"></td>
-        <td><input type="number"></td>
+        <td><input id="nameInput" type="text"></td>
+        <td><input id="numberInput" type="number"></td>
         <td><input id="dateInput" type="date" id="start" name="trip-start"
           value="2020-04-27"
           min="2020-04-27" max="2040-12-31"></td>
-        <td><button>Add</button></td>
+        <td><button id="addButton">Add</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <table class = "addItemForm">
+    <caption>Edit</caption>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Number</th>
+        <th scope="col">Expire Date</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input id="nameEdit" type="text"></td>
+        <td><input id="numberEdit" type="number"></td>
+        <td><input id="dateEdit" type="date" id="start" name="trip-start"
+          value="2020-04-27"
+          min="2020-04-27" max="2040-12-31"></td>
+        <td><button id="editButton">Edit</button></td>
       </tr>
     </tbody>
   </table>
@@ -48,21 +73,28 @@
 <script>
   let item1 = document.getElementById('item1');
   let tbody = document.getElementById('tbody');
-  let dateInput = document.getElementById('dateInput')
+  // let nameInput = document.getElementById('nameInput').value
+  // let numberInput = document.getElementById('numberInput').value
+  // let dateInput = document.getElementById('dateInput').value
 //   async function itemLength() { await fetch('http://localhost:4000/api/fridge', {
 //     method: 'GET'
 //   }).then(res => res.json()).then(json => {
 //     return json.length
 //   })
 // }
-console.log(dateInput.value)
+// console.log(nameInput.value)
 // console.log(itemLength())
 
-  let addNewItem = (num) => {
+  // const event = res.addEventListener('click', function() {
+  //     fetch('http://localhost:4000/api/fridge/res.value', {
+  //       method: 'DELETE'
+  //     }).then(res => res.json()).then(json => console.log(json))
+  //   })
+
+  const seedItem = (num) => {
     fetch(`http://localhost:4000/api/fridge/${num}`, {
     method: 'GET'
   }).then(res => res.json()).then(json => {
-    console.log(json)
     let tr1 = document.createElement('TR');
     let td1_1 = document.createElement('TD');
     td1_1.appendChild(document.createTextNode(json.name));
@@ -73,6 +105,8 @@ console.log(dateInput.value)
     let td1_4 = document.createElement('TD');
     let bt = document.createElement('BUTTON');
     bt.innerText = 'Ate It';
+    bt.className = 'ateIt';
+    bt.value = num;
     td1_4.appendChild(bt);
     // td1_4.appendChild(document.createTextNode(json.expire_date));
     tr1.appendChild(td1_1);
@@ -81,46 +115,86 @@ console.log(dateInput.value)
     tr1.appendChild(td1_4);
 
     tbody.appendChild(tr1);
-  })
+    return bt
+  }).then(bt => deleteItem(bt))
+}
+
+  const getAll = () => {
+    return fetch('http://localhost:4000/api/fridge', {
+      method: 'GET'
+    }).then(res => res.json()).then(json => {
+        json.forEach(element => {
+          seedItem(element.id)
+        })
+    })
+  }
+
+  getAll();
+  
+
+  const deleteItem = (bt) => {
+    bt.addEventListener('click', function() {
+      return fetch(`http://localhost:4000/api/fridge/${bt.value}`, {
+      method: 'DELETE'
+    }).then(res => res.json()).then(json => {
+      location.reload();
+    })
+    })
+  }
+  
+  let query = {
+        "name": null,
+        "number": null,
+        "expire_date": null
   };
 
-  for(let i = 1; i <= 4; i++){
-    addNewItem(i)
-  }
-  // while(itemLength >= 0){
-  //   addNewItem(itemLength)
-  //   itemLength--;
-  // }
-  // fetch('http://localhost:4000/api/fridge', {
-  //   method: 'GET'
-  // }).then(res => res.json()).then(json => {
-  //   console.log(json)
-  //   let div = document.createElement('div')
-  //   div.innerText = json.map(item => item.name);
-  //   document.body.appendChild(div)
-  // })
+  addButton.addEventListener('click', function() {
+    query.name = document.getElementById('nameInput').value;
+    query.number = document.getElementById('numberInput').value;
+    query.expire_date = document.getElementById('dateInput').value;
 
-  const query = {
-        "name": "kimuchi",
-        "number": 1,
-        "expire_date": "2020-11-13"
-  }
+    fetch('http://localhost:4000/api/fridge', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(query)
+  }).then(res => res.json()).then(json => {
+    console.log(json)
+    seedItem(json.id)
+    document.getElementById('nameInput').value = '';
+    document.getElementById('numberInput').value = '';
+    document.getElementById('dateInput').value = '2020-04-27';
+  })
 
-  // fetch('http://localhost:4000/api/fridge', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(query)
-  // }).then(res => res.json()).then(json => {
-  //   console.log(json)
-  //   let div = document.createElement('div')
-  //   div.innerText = json.name;
-  //   document.body.appendChild(div)
-  // })
+  })
 
-  // console.log(data)
-  // let parsedData = JSON.parse(data)
-  // console.log('after', parsedData)
-  // document.getElementById('target').innerHTML = parsedData['id']
-  // document.body.appendChild(data.id);
+
+
+  editButton.addEventListener('click', function() {
+    let name = document.getElementById('nameEdit').value;
+    let number = document.getElementById('numberEdit').value;
+    let expire_date = document.getElementById('dateEdit').value;
+
+    fetch('http://localhost:4000/api/fridge', {
+    method: 'GET'
+    // headers: { 'Content-Type': 'application/json' },
+    // body: JSON.stringify(query)
+  }).then(res => res.json()).then(json => {
+    let name = document.getElementById('nameEdit').value;
+    let number = document.getElementById('numberEdit').value;
+    let expire_date = document.getElementById('dateEdit').value;
+    let target = json.filter(item => item.name === name);
+    query.name = target[0].name;
+    query.number = number;
+    query.expire_date = expire_date;
+  
+    fetch(`http://localhost:4000/api/fridge/${target[0].id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(query)
+    }).then(res => res.json()).then(json => {
+      location.reload();
+    });
+  });
+  });
 </script>
 </html>

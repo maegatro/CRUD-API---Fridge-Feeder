@@ -1,12 +1,18 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  /* background-image: url("../images/fridges.jpg"); */
+  background-image: url("../images/f2.jpg");
   background-size: cover;
   font-family: "Open Sans", sans-serif;
   line-height: 1.25;
-  background-color:rgba(255,255,255,0.6);
-  background-blend-mode:lighten;
+  background-color:rgba(255,255,255,0.1);
+  /* background-blend-mode:lighten; */
+}
+
+a {
+  color: aquamarine;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 2em;
 }
 
 
@@ -15,15 +21,15 @@ table {
   border-collapse: collapse;
   margin: 0;
   padding: 0;
-  width: 80%;
+  width: 100%;
   table-layout: fixed;
 }
 
 table caption {
-  font-size: 1.5em;
+  font-size: 2.5em;
   margin: .5em 0 .75em;
-  color: black;
-  /* text-shadow: 1px 1px 0 white */
+  color: white;
+  text-shadow: 2px 2px 0 black;
 }
 
 table tr {
@@ -91,4 +97,8 @@ table th {
   table td:last-child {
     border-bottom: 0;
   }
+}
+
+.addItemForm {
+  margin-top: 30px;
 }

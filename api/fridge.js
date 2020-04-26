@@ -32,6 +32,16 @@ router.get('/:id', isValidId, (req, res, next) => {
   });
 });
 
+// router.get('/:name', (req, res, next) => {
+//   queries.getOne(req.params.name).then(insidefridge => {
+//     if(insidefridge) {
+//       res.json(insidefridge);
+//     } else {
+//       next();
+//     }
+//   });
+// });
+
 router.post('/', (req, res, next) => {
   if(validItem(req.body)) {
     queries.create(req.body).then(insidefridge => {
