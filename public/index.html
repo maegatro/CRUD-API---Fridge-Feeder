@@ -4,19 +4,93 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fridge-Feeder</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 </head>
 <body>
-  <div id="target">ssssssssssss</div>
+
+  <table>
+    <caption>What's Inside My Fridge</caption>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Number</th>
+        <th scope="col">Expire Date</th>
+        <!-- <th scope="col">Period</th> -->
+      </tr>
+    </thead>
+    <tbody id="tbody">
+      <tr>
+        <td id="item1" data-label="Account">Visa - 3412</td>
+        <td data-label="Due Date">04/01/2016</td>
+        <td data-label="Amount">$1,190</td>
+        <!-- <td data-label="Period">03/01/2016 - 03/31/2016</td> -->
+      </tr>
+      <tr>
+        <td scope="row" data-label="Account">Visa - 6076</td>
+        <td data-label="Due Date">03/01/2016</td>
+        <td data-label="Amount">$2,443</td>
+        <!-- <td data-label="Period">02/01/2016 - 02/29/2016</td> -->
+      </tr>
+      <tr>
+        <td scope="row" data-label="Account">Corporate AMEX</td>
+        <td data-label="Due Date">03/01/2016</td>
+        <td data-label="Amount">$1,181</td>
+        <!-- <td data-label="Period">02/01/2016 - 02/29/2016</td> -->
+      </tr>
+      <tr>
+        <td scope="row" data-label="Acount">Visa - 3412</td>
+        <td data-label="Due Date">02/01/2016</td>
+        <td data-label="Amount">$842</td>
+        <!-- <td data-label="Period">01/01/2016 - 01/31/2016</td> -->
+      </tr>
+      <tr>
+        <td>ja</td>
+        <td>d</td>
+        <td>d</td>
+      </tr>
+    </tbody>
+  </table>
+
 </body>
 <script>
-  fetch('http://localhost:4000/api/fridge', {
+  let item1 = document.getElementById('item1');
+  let tbody = document.getElementById('tbody');
+
+  console.log(item1.innerText)
+
+  fetch('http://localhost:4000/api/fridge/1', {
+    method: 'GET'
+  }).then(res => res.json()).then(json => {
+    item1.innerText = json.name;
+    // document.body.appendChild(div)
+  })
+
+  let addNewItem = fetch('http://localhost:4000/api/fridge/1', {
     method: 'GET'
   }).then(res => res.json()).then(json => {
     console.log(json)
-    let div = document.createElement('div')
-    div.innerText = json.map(item => item.name);
-    document.body.appendChild(div)
-  })
+    let tr1 = document.createElement('TR');
+    let td1_1 = document.createElement('TD');
+    td1_1.appendChild(document.createTextNode(json.name));
+    let td1_2 = document.createElement('TD');
+    td1_2.appendChild(document.createTextNode(json.number));
+    let td1_3 = document.createElement('TD');
+    td1_3.appendChild(document.createTextNode(json.expire_date));
+    tr1.appendChild(td1_1);
+    tr1.appendChild(td1_2);
+    tr1.appendChild(td1_3);
+
+    tbody.appendChild(tr1);
+  });
+
+  // fetch('http://localhost:4000/api/fridge', {
+  //   method: 'GET'
+  // }).then(res => res.json()).then(json => {
+  //   console.log(json)
+  //   let div = document.createElement('div')
+  //   div.innerText = json.map(item => item.name);
+  //   document.body.appendChild(div)
+  // })
 
   const query = {
         "name": "kimuchi",
@@ -24,16 +98,16 @@
         "expire_date": "2020-11-13"
   }
 
-  fetch('http://localhost:4000/api/fridge', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(query)
-  }).then(res => res.json()).then(json => {
-    console.log(json)
-    let div = document.createElement('div')
-    div.innerText = json.name;
-    document.body.appendChild(div)
-  })
+  // fetch('http://localhost:4000/api/fridge', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(query)
+  // }).then(res => res.json()).then(json => {
+  //   console.log(json)
+  //   let div = document.createElement('div')
+  //   div.innerText = json.name;
+  //   document.body.appendChild(div)
+  // })
 
   // console.log(data)
   // let parsedData = JSON.parse(data)

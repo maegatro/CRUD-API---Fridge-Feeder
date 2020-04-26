@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.text('name');
     table.integer('number');
-    table.date('expire_date');
+    table.string('expire_date');
   });
 };
 
