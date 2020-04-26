@@ -9,6 +9,7 @@ const logger = require('morgan');
 const app = express();
 
 const stickers = require('./api/stickers');
+const fridge = require('./api/fridge');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -17,6 +18,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/stickers', stickers);
+app.use('/api/fridge', fridge);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,7 +4,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/sticker'
+    connection: 'postgres://localhost/fridgemanager'
   },
 
   test: {

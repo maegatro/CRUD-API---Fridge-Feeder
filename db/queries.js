@@ -2,12 +2,12 @@ const knex = require('./knex'); //the connection
 
 module.exports = {
   getAll() {
-    return knex('sticker');
+    return knex('insidefridge');
   },
   getOne(id) {
-    return knex('sticker').where('id', id).first();
+    return knex('insidefridge').where('id', id).first();
   },
-  create(sticker) {
-    return knex('sticker').insert(sticker, '*');
+  create(insidefridge) {
+    return knex('insidefridge').insert(insidefridge, '*');
   }
 }
