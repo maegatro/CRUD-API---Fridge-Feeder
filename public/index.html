@@ -4,8 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <
 </head>
 <body>
-  hssssssssssssssssss
+  <div id="target">ssssssssssss</div>
 </body>
+<script>
+  fetch('http://localhost:3000/api/v1/stickers/1', {
+    method: 'GET'
+  }).then(res => res.json()).then(json => {
+    console.log(json)
+    let div = document.createElement('div')
+    div.innerText = json.title;
+    document.body.appendChild(div)
+  })
+
+  const query = {
+        "title": "new",
+        "description": "new Logo",
+        "rating": 100,
+        "url": "http://devstickers.com/assets/img/pro/i4eg.png"
+  }
+
+  fetch('http://localhost:3000/api/v1/stickers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(query)
+  }).then(res => res.json()).then(json => {
+    console.log(json)
+    let div = document.createElement('div')
+    div.innerText = json.title;
+    document.body.appendChild(div)
+  })
+
+  // console.log(data)
+  // let parsedData = JSON.parse(data)
+  // console.log('after', parsedData)
+  // document.getElementById('target').innerHTML = parsedData['id']
+  // document.body.appendChild(data.id);
+</script>
 </html>
